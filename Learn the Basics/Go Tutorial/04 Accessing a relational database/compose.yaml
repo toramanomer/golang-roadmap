@@ -1,0 +1,11 @@
+services:
+    db:
+        image: mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: recordings
+        ports:
+            - '3306:3306'
+        volumes:
+            - ./create-tables.sql:/docker-entrypoint-initdb.d/create-tables.sql
