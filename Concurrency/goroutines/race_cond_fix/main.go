@@ -1,0 +1,27 @@
+package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+func main() {
+	count := 0
+	const numGs = 500
+
+	waitGroup := sync.WaitGroup{}
+	waitGroup.Add(numGs)
+
+	mu := sync.Mutex{}
+	for range numGs {
+		go func() {
+			defer waitGroup.Done()
+			mu.Lock()
+			count++
+			mu.Unlock()
+		}()
+	}
+
+	waitGroup.Wait()
+	fmt.Println("Main function done with count equal to", count)
+}
